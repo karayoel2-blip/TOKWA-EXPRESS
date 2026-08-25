@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tokwa Express - Simulateur</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="app">
+    <section class="hero-card">
+      <div class="brand">
+        <img src="Logo Tokwa Express.png" alt="Logo Tokwa Express" class="logo" />
+        <div>
+          <h1>TOKWA EXPRESS</h1>
+          <p>Simulateur de transfert RCA ⇄ Maroc</p>
+        </div>
+      </div>
+
+      <div class="direction-card">
+        <div class="country" id="fromCountry">
+          <span class="flag"><img id="fromFlag" src="flag-rca.svg" alt="Drapeau de la RCA"></span>
+          <div>
+            <small>De</small>
+            <strong><span id="fromName">RCA</span></strong>
+          </div>
+        </div>
+
+        <button id="switchDirection" class="switch-btn" type="button" aria-label="Inverser le sens">⇄</button>
+
+        <div class="country right" id="toCountry">
+          <span class="flag"><img id="toFlag" src="flag-morocco.svg" alt="Drapeau du Maroc"></span>
+          <div>
+            <small>Vers</small>
+            <strong><span id="toName">Maroc</span></strong>
+          </div>
+        </div>
+      </div>
+
+      <div class="mode-tabs">
+        <button class="mode active" data-mode="send" type="button">J'envoie</button>
+        <button class="mode" data-mode="receive" type="button">Je veux recevoir</button>
+      </div>
+
+      <div class="input-group">
+        <label id="amountLabel" for="amountInput">Montant envoyé (FCFA)</label>
+        <div class="amount-box">
+          <input id="amountInput" type="text" inputmode="numeric" placeholder="Ex : 300 000" autocomplete="off" />
+          <span class="currency-pill"><span id="currencyIcon">💵</span><span id="inputCurrency">FCFA</span></span>
+        </div>
+        <p id="hint" class="hint">Transferts d'argent rapide et sécurisés.</p>
+      </div>
+
+      <div id="error" class="error"></div>
+
+      <section class="result-card" id="resultCard">
+        <div class="result-header">
+          <span id="resultIcon">📋</span>
+          <h2>Détail de l'opération</h2>
+        </div>
+
+        <div class="rows" id="resultRows"></div>
+
+        <div class="final-box">
+          <p id="finalLabel">Le bénéficiaire recevra</p>
+          <strong id="finalAmount">0 DH</strong>
+        </div>
+      </section>
+
+      <a id="whatsapp" class="whatsapp" href="https://wa.me/212669771099" target="_blank" rel="noopener">
+        <span class="wa-icon">🟢</span> Contacter sur WhatsApp (+212 669 77 10 99)
+      </a>
+
+      <footer>
+        <span id="rateText">Taux Appliqué : 1 FCFA = 0.015 MAD</span>
+      </footer>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
