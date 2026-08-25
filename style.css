@@ -1,0 +1,382 @@
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Poppins',sans-serif}
+
+:root{
+  --green-dark:#0D3B2E;    /* Vert foncé principal de Tokwa Express */
+  --green-header:#144D3D;  /* Nuance de vert pour cartes et survol */
+  --gold:#E1A730;          /* Jaune/Or des titres et boutons */
+  --gold-light:#F9E8B2;    /* Jaune très clair pour les fonds/accents */
+  --dark:#111827;
+  --muted:#6b7280;
+  --soft:#f0f5f3;
+  --line:#cbd5e1;
+  --whatsapp:#25d366;
+  --white:#fff;
+  --red:#dc2626;
+}
+
+body{
+  min-height:100vh;
+  background:radial-gradient(circle at top,#eef7f4 0,#e2ede9 42%,#d4e4df 100%);
+  padding:24px;
+  color:var(--dark)
+}
+
+.app{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center
+}
+
+.hero-card{
+  width:100%;
+  max-width:520px;
+  background:rgba(255,255,255,.96);
+  border:1px solid rgba(13,59,46,.15);
+  border-radius:28px;
+  padding:26px;
+  box-shadow:0 24px 80px rgba(13,59,46,.18);
+  animation:rise .45s ease
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:16px;
+  margin-bottom:24px
+}
+
+.logo {
+  width: 78px;
+  height: 78px;
+  object-fit: fill; /* Étire l'image pour remplir 100% du carré */
+  border-radius: 18px;
+  background: #D6ECDA; /* Maintient le même vert clair que l'image */
+  box-shadow: 0 8px 22px rgba(13, 59, 46, .12);
+}
+
+.brand h1{
+  font-size:30px;
+  line-height:1;
+  color:var(--green-dark);
+  font-weight:800
+}
+
+.brand p{
+  font-size:13px;
+  color:var(--muted);
+  margin-top:8px
+}
+
+.direction-card{
+  display:grid;
+  grid-template-columns:1fr 54px 1fr;
+  align-items:center;
+  gap:10px;
+  background:linear-gradient(135deg,#fff,#f4f8f6);
+  border:1px solid var(--line);
+  border-radius:22px;
+  padding:14px;
+  margin-bottom:16px
+}
+
+.country{
+  display:flex;
+  align-items:center;
+  gap:10px
+}
+
+.country.right{
+  justify-content:flex-end;
+  text-align:right
+}
+
+.flag{
+  width:52px;
+  height:52px;
+  display:grid;
+  place-items:center;
+  border-radius:50%;
+  background:#fff;
+  box-shadow:0 8px 20px rgba(13,59,46,.12);
+  border:1px solid rgba(229,231,235,.9);
+  overflow:hidden;
+  padding:5px
+}
+
+.flag img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  border-radius:50%;
+  display:block
+}
+
+.country small{
+  display:block;
+  color:var(--muted);
+  font-size:12px
+}
+
+.country strong{
+  font-size:17px;
+  color:var(--green-dark)
+}
+
+.switch-btn{
+  width:54px;
+  height:54px;
+  border:none;
+  border-radius:50%;
+  background:var(--gold);
+  color:var(--green-dark);
+  font-size:26px;
+  font-weight:bold;
+  cursor:pointer;
+  box-shadow:0 8px 22px rgba(225,167,48,.4);
+  transition:.2s
+}
+
+.switch-btn:hover{
+  transform:rotate(180deg) scale(1.05);
+  background:#eed06d
+}
+
+.mode-tabs{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  background:#eaefed;
+  border-radius:16px;
+  padding:5px;
+  margin-bottom:18px
+}
+
+.mode{
+  border:none;
+  border-radius:13px;
+  padding:13px 8px;
+  font-weight:700;
+  color:var(--muted);
+  background:transparent;
+  cursor:pointer;
+  transition:.2s
+}
+
+.mode.active{
+  background:var(--green-dark);
+  color:var(--gold);
+  box-shadow:0 8px 20px rgba(13,59,46,.2)
+}
+
+.input-group label{
+  display:block;
+  font-size:14px;
+  font-weight:700;
+  color:var(--green-dark);
+  margin-bottom:9px
+}
+
+.amount-box{
+  display:flex;
+  align-items:center;
+  border:2px solid var(--line);
+  background:#fff;
+  border-radius:18px;
+  padding:0 16px;
+  transition:.2s
+}
+
+.amount-box:focus-within{
+  border-color:var(--green-dark);
+  box-shadow:0 0 0 4px rgba(13,59,46,.1)
+}
+
+.amount-box input{
+  flex:1;
+  border:none;
+  outline:none;
+  padding:19px 0;
+  font-size:28px;
+  font-weight:700;
+  color:var(--green-dark);
+  min-width:0
+}
+
+.currency-pill{
+  font-weight:800;
+  color:var(--green-dark);
+  margin-left:10px;
+  display:flex;
+  align-items:center;
+  gap:6px;
+  background:var(--gold-light);
+  border:1px solid rgba(225,167,48,.4);
+  padding:8px 12px;
+  border-radius:999px;
+  white-space:nowrap
+}
+
+.hint{
+  font-size:12px;
+  color:var(--muted);
+  margin-top:8px
+}
+
+.error{
+  min-height:22px;
+  margin-top:12px;
+  color:var(--red);
+  font-weight:700;
+  text-align:center;
+  font-size:13px
+}
+
+.result-card{
+  margin-top:10px;
+  background:#f6f9f8;
+  border:1px solid var(--line);
+  border-radius:22px;
+  padding:20px;
+  transition:.25s ease
+}
+
+.result-card.pop{
+  animation:resultPop .35s ease
+}
+
+.result-header{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  justify-content:center;
+  margin-bottom:12px
+}
+
+.result-header h2{
+  font-size:18px;
+  color:var(--green-dark)
+}
+
+.row{
+  display:flex;
+  justify-content:space-between;
+  gap:14px;
+  padding:12px 0;
+  border-bottom:1px dashed #cbd5e1
+}
+
+.row:last-child{
+  border-bottom:none
+}
+
+.row span{
+  color:var(--muted);
+  font-size:14px
+}
+
+.row strong{
+  text-align:right;
+  font-size:15px;
+  color:var(--green-dark)
+}
+
+.negative{
+  color:var(--red) !important
+}
+
+.positive{
+  color:#15803d !important;
+  font-weight:bold
+}
+
+.final-box{
+  margin-top:18px;
+  text-align:center;
+  padding:20px;
+  border-radius:20px;
+  background:linear-gradient(135deg, var(--green-dark), var(--green-header));
+  color:#fff;
+  box-shadow:0 10px 25px rgba(13,59,46,.25)
+}
+
+.final-box p{
+  font-size:13px;
+  color:var(--gold-light);
+  margin-bottom:8px
+}
+
+.final-box strong{
+  font-size:36px;
+  line-height:1.1;
+  color:var(--gold)
+}
+
+.whatsapp{
+  display:block;
+  text-align:center;
+  text-decoration:none;
+  margin-top:18px;
+  background:var(--whatsapp);
+  color:#fff;
+  padding:17px;
+  border-radius:16px;
+  font-weight:800;
+  box-shadow:0 12px 28px rgba(37,211,102,.28);
+  transition:.2s
+}
+
+.wa-icon{
+  margin-right:6px
+}
+
+.whatsapp:hover{
+  transform:translateY(-2px)
+}
+
+.whatsapp.disabled{
+  opacity:.45;
+  pointer-events:none
+}
+
+footer{
+  text-align:center;
+  color:var(--green-dark);
+  font-size:12px;
+  font-weight:600;
+  margin-top:18px
+}
+
+@keyframes rise{
+  from{opacity:0;transform:translateY(18px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+@keyframes resultPop{
+  0%{opacity:.65;transform:scale(.985)}
+  100%{opacity:1;transform:scale(1)}
+}
+
+.direction-card.switching{
+  animation:switchPulse .28s ease
+}
+
+@keyframes switchPulse{
+  0%{transform:scale(.985)}
+  50%{transform:scale(1.02)}
+  100%{transform:scale(1)}
+}
+
+@media(max-width:520px){
+  body{padding:14px}
+  .hero-card{padding:20px;border-radius:24px}
+  .brand{gap:12px}
+  .logo{width:64px;height:64px}
+  .brand h1{font-size:25px}
+  .brand p{font-size:12px}
+  .direction-card{grid-template-columns:1fr 46px 1fr;padding:12px}
+  .switch-btn{width:46px;height:46px;font-size:22px}
+  .flag{width:44px;height:44px}
+  .country strong{font-size:14px}
+  .amount-box input{font-size:24px}
+  .final-box strong{font-size:30px}
+}
