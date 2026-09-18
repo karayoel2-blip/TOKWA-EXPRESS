@@ -108,14 +108,17 @@ Je souhaite poursuivre l'opération.`);
 }
 
 function calculateMoroccoToRca(amount) {
+  // Taux de conversion : 1 DH = 61 FCFA + 2% de bonus (soit 61 * 1.02 = 62.22 FCFA/DH)
+  const rateWithBonus = 61 * 1.02;
+
   if (state.mode === "send") {
     if (amount <= 0) throw new Error("Veuillez saisir le montant envoyé en DH.");
 
-    const amountFcfa = amount / 0.015;
+    const amountFcfa = amount * rateWithBonus;
 
     rows([
       { label: "💴 Montant remis", value: money(amount, "DH") },
-      { label: "📈 Taux appliqué", value: "1 FCFA = 0.015 MAD" }
+      { label: "📈 Taux appliqué", value: "1 DH = 61 FCFA (+2% bonus offert)" }
     ]);
 
     el.finalLabel.textContent = "Le bénéficiaire recevra en RCA";
@@ -131,11 +134,11 @@ Je souhaite poursuivre l'opération.`);
 
   if (amount < 5000) throw new Error("Le montant souhaité doit être au minimum de 5 000 FCFA.");
 
-  const amountMad = amount * 0.015;
+  const amountMad = amount / rateWithBonus;
 
   rows([
     { label: "💵 Montant souhaité", value: money(amount, "FCFA") },
-    { label: "📈 Taux appliqué", value: "1 FCFA = 0.015 MAD" }
+    { label: "📈 Taux appliqué", value: "1 DH = 61 FCFA (+2% bonus offert)" }
   ]);
 
   el.finalLabel.textContent = "Montant à remettre au Maroc";
@@ -178,7 +181,11 @@ function updateUI() {
   el.toFlag.alt = isRcaMa ? "Drapeau du Maroc" : "Drapeau de la RCA";
   el.toName.textContent = isRcaMa ? "Maroc" : "RCA";
   el.resultIcon.textContent = "📋";
-  el.rateText.textContent = "Taux Appliqué : 1 FCFA = 0.015 MAD";
+  
+  // Affichage dynamique du taux selon le sens du transfert
+  el.rateText.textContent = isRcaMa 
+    ? "Taux Appliqué : 1 FCFA = 0.015 MAD" 
+    : "Taux Appliqué : 1 DH = 61 FCFA (+2% bonus offert)";
 
   if (isRcaMa && isSend) {
     el.amountLabel.textContent = "Montant envoyé (FCFA)";
