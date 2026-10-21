@@ -1,4 +1,4 @@
-const WHATSAPP_NUMBER = "212669771099";
+const WHATSAPP_NUMBER = "23672827610";
 
 const state = {
   direction: "RCA_MA", // RCA_MA = RCA vers Maroc / MA_RCA = Maroc vers RCA
