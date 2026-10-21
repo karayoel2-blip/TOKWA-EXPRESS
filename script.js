@@ -2,7 +2,7 @@ const WHATSAPP_NUMBER = "23672827610";
 
 const state = {
   direction: "RCA_MA", // RCA_MA = RCA vers Maroc / MA_RCA = Maroc vers RCA
-  mode: "send"        // send = J'envoie / receive = Je veux recevoir
+  mode: "send"         // send = J'envoie / receive = Je veux recevoir
 };
 
 const el = {
@@ -112,16 +112,16 @@ function calculateMoroccoToRca(amount) {
   const BONUS_RATE = 0.02; // 2% de prime offerte
 
   if (state.mode === "send") {
-    if (amount <= 0) throw new Error("Veuillez saisir le montant remis en MAD.");
+    if (amount <= 0) throw new Error("Veuillez saisir le montant remis au Maroc.");
 
     const convertedFcfa = amount * BASE_RATE;
     const bonusFcfa = convertedFcfa * BONUS_RATE;
     const totalFcfa = convertedFcfa + bonusFcfa;
 
     rows([
-      { label: "💴 Montant remis", value: money(amount, "DH") },
+      { label: "💴 Montant remis", value: money(amount, "MAD") },
       { label: "💵 Montant converti", value: money(convertedFcfa, "FCFA") },
-      { label: "🎁 Prime Tokwa Express", value: `+${format(bonusFcfa)} FCFA`, className: "bonus-row" },
+      { label: "🎁 Prime Tokwa Express", value: `+${format(bonusFcfa)} FCFA`, className: "positive" },
       { label: "📈 Taux appliqué", value: "1 MAD = 61 FCFA" }
     ]);
 
@@ -130,7 +130,7 @@ function calculateMoroccoToRca(amount) {
 
     setWhatsapp(`Bonjour TOKWA EXPRESS.
 Je souhaite effectuer un transfert Maroc → RCA.
-Je remets ${money(amount, "DH")}.
+Je remets ${money(amount, "MAD")}.
 Selon la simulation, le bénéficiaire recevra ${money(totalFcfa, "FCFA")} (avec la prime incluse).
 Je souhaite poursuivre l'opération.`);
     return;
@@ -138,8 +138,6 @@ Je souhaite poursuivre l'opération.`);
 
   if (amount < 5000) throw new Error("Le montant souhaité doit être au minimum de 5 000 FCFA.");
 
-  // Si l'utilisateur choisit "Je veux recevoir" en FCFA
-  // On calcule à l'vers : Total / 1.02 = Montant converti de base, puis / 61 pour le MAD
   const totalFcfa = amount;
   const convertedFcfa = totalFcfa / (1 + BONUS_RATE);
   const bonusFcfa = totalFcfa - convertedFcfa;
@@ -148,36 +146,17 @@ Je souhaite poursuivre l'opération.`);
   rows([
     { label: "💵 Montant souhaité", value: money(amount, "FCFA") },
     { label: "💵 Montant converti", value: money(convertedFcfa, "FCFA") },
-    { label: "🎁 Prime Tokwa Express", value: `+${format(bonusFcfa)} FCFA`, className: "bonus-row" },
+    { label: "🎁 Prime Tokwa Express", value: `+${format(bonusFcfa)} FCFA`, className: "positive" },
     { label: "📈 Taux appliqué", value: "1 MAD = 61 FCFA" }
   ]);
 
   el.finalLabel.textContent = "Montant à remettre au Maroc";
-  el.finalAmount.textContent = money(amountMad, "DH");
-
-  setWhatsapp(`Bonjour TOKwa EXPRESS.
-Je souhaite effectuer un transfert Maroc → RCA.
-Je veux que le bénéficiaire reçoive ${money(amount, "FCFA")}.
-Selon la simulation, je dois remettre ${money(amountMad, "DH")} au Maroc.
-Je souhaite poursuivre l'opération.`);
-}
-
-  if (amount < 5000) throw new Error("Le montant souhaité doit être au minimum de 5 000 FCFA.");
-
-  const amountMad = amount / rateWithBonus;
-
-  rows([
-    { label: "💵 Montant souhaité", value: money(amount, "FCFA") },
-    { label: "📈 Taux appliqué", value: "1 DH = 61 FCFA (+2% bonus offert)" }
-  ]);
-
-  el.finalLabel.textContent = "Montant à remettre au Maroc";
-  el.finalAmount.textContent = money(amountMad, "DH");
+  el.finalAmount.textContent = money(amountMad, "MAD");
 
   setWhatsapp(`Bonjour TOKWA EXPRESS.
 Je souhaite effectuer un transfert Maroc → RCA.
-Je veux recevoir ${money(amount, "FCFA")}.
-Selon la simulation, je dois remettre ${money(amountMad, "DH")}.
+Je veux que le bénéficiaire reçoive ${money(amount, "FCFA")}.
+Selon la simulation, je dois remettre ${money(amountMad, "MAD")} au Maroc.
 Je souhaite poursuivre l'opération.`);
 }
 
@@ -212,10 +191,9 @@ function updateUI() {
   el.toName.textContent = isRcaMa ? "Maroc" : "RCA";
   el.resultIcon.textContent = "📋";
   
-  // Affichage dynamique du taux selon le sens du transfert
- el.rateText.textContent = isRcaMa 
-  ? "Taux Appliqué : 1 FCFA = 0.015 MAD" 
-  : "Taux Appliqué : 1 MAD = 61 FCFA (Prime de 2% offerte)";
+  el.rateText.textContent = isRcaMa 
+    ? "Taux Appliqué : 1 FCFA = 0.015 MAD" 
+    : "Taux Appliqué : 1 MAD = 61 FCFA (Prime de 2% offerte)";
 
   if (isRcaMa && isSend) {
     el.amountLabel.textContent = "Montant envoyé (FCFA)";
@@ -230,17 +208,17 @@ function updateUI() {
     el.amountInput.placeholder = "Ex : 4 500";
     el.hint.textContent = "Le simulateur calcule le montant FCFA à envoyer.";
   } else if (!isRcaMa && isSend) {
-    el.amountLabel.textContent = "Montant remis au Maroc (DH)";
-    el.inputCurrency.textContent = "DH";
+    el.amountLabel.textContent = "Montant remis au Maroc (MAD)";
+    el.inputCurrency.textContent = "MAD";
     el.currencyIcon.textContent = "💴";
-    el.amountInput.placeholder = "Ex : 1 000";
-    el.hint.textContent = "Transferts d'argent rapide et sécurisés.";
+    el.amountInput.placeholder = "Ex : 10 000";
+    el.hint.textContent = "Une Prime Tokwa Express est ajoutée au montant reçu en RCA.";
   } else {
     el.amountLabel.textContent = "Montant souhaité en RCA (FCFA)";
     el.inputCurrency.textContent = "FCFA";
     el.currencyIcon.textContent = "💵";
-    el.amountInput.placeholder = "Ex : 250 000";
-    el.hint.textContent = "Calcul du montant DH à remettre au Maroc.";
+    el.amountInput.placeholder = "Ex : 618 300";
+    el.hint.textContent = "Calcul du montant MAD à remettre au Maroc.";
   }
 
   el.amountInput.value = "";
