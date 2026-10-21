@@ -73,6 +73,7 @@ function calculateRcaToMorocco(amount) {
 
     rows([
       { label: "💵 Montant envoyé", value: money(amount, "FCFA") },
+      { label: "💼 Frais de service", value: "0 FCFA (Gratuit)", className: "positive" },
       { label: "📈 Taux appliqué", value: "1 FCFA = 0.015 MAD" }
     ]);
 
@@ -82,10 +83,31 @@ function calculateRcaToMorocco(amount) {
     setWhatsapp(`Bonjour TOKWA EXPRESS.
 Je souhaite effectuer un transfert RCA → Maroc.
 J'envoie ${money(amount, "FCFA")}.
-Selon la simulation, le bénéficiaire recevra ${money(receivedMad, "DH")}.
+Selon la simulation, le bénéficiaire recevra ${money(receivedMad, "DH")} (0% de frais).
 Je souhaite poursuivre l'opération.`);
     return;
   }
+
+  if (amount <= 0) throw new Error("Veuillez saisir le montant souhaité en DH.");
+
+  const desiredMad = amount;
+  const amountFcfa = desiredMad / 0.015;
+
+  rows([
+    { label: "💴 Montant souhaité", value: money(desiredMad, "DH") },
+    { label: "💼 Frais de service", value: "0 FCFA (Gratuit)", className: "positive" },
+    { label: "📈 Taux appliqué", value: "1 FCFA = 0.015 MAD" }
+  ]);
+
+  el.finalLabel.textContent = "Pour recevoir ce montant, vous envoyez";
+  el.finalAmount.textContent = money(amountFcfa, "FCFA");
+
+  setWhatsapp(`Bonjour TOKWA EXPRESS.
+Je souhaite effectuer un transfert RCA → Maroc.
+Je veux que le bénéficiaire reçoive ${money(desiredMad, "DH")}.
+Selon la simulation, je dois envoyer ${money(amountFcfa, "FCFA")} (0% de frais).
+Je souhaite poursuivre l'opération.`);
+}
 
   if (amount <= 0) throw new Error("Veuillez saisir le montant souhaité en DH.");
 
