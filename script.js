@@ -109,26 +109,6 @@ Selon la simulation, je dois envoyer ${money(amountFcfa, "FCFA")} (0% de frais).
 Je souhaite poursuivre l'opération.`);
 }
 
-  if (amount <= 0) throw new Error("Veuillez saisir le montant souhaité en DH.");
-
-  const desiredMad = amount;
-  const amountFcfa = desiredMad / 0.015;
-
-  rows([
-    { label: "💴 Montant souhaité", value: money(desiredMad, "DH") },
-    { label: "📈 Taux appliqué", value: "1 FCFA = 0.015 MAD" }
-  ]);
-
-  el.finalLabel.textContent = "Pour recevoir ce montant, vous envoyez";
-  el.finalAmount.textContent = money(amountFcfa, "FCFA");
-
-  setWhatsapp(`Bonjour TOKWA EXPRESS.
-Je souhaite effectuer un transfert RCA → Maroc.
-Je veux que le bénéficiaire reçoive ${money(desiredMad, "DH")}.
-Selon la simulation, je dois envoyer ${money(amountFcfa, "FCFA")}.
-Je souhaite poursuivre l'opération.`);
-}
-
 function calculateMoroccoToRca(amount) {
   const BASE_RATE = 61; // 1 MAD = 61 FCFA
   const BONUS_RATE = 0.02; // 2% de prime offerte
